@@ -1,0 +1,6 @@
+einops
+torch
+wandb
+numpy
+tiktoken
+datasets
