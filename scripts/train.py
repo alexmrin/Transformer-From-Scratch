@@ -21,7 +21,7 @@ from tools.torch_utils import (
     seed_all,
 )
 from tools.trainer import Trainer
-from model.model import DecoderModel
+from model.optim_model import DecoderModel
 from data.openwebtext.dataset import OpenWebTextDataset
 
 def main(cfg: TrainConfig) -> None:
