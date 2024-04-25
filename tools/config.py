@@ -7,13 +7,13 @@ import torch
 @dataclass
 class ModelConfig:
     d_model: int = 768
-    n_layers: int = 10
+    n_layers: int = 12
     n_heads: int = 12
     n_kvheads: int = 4
     d_intermediate: int = 3072
-    attn_dropout: float = 0.1
-    ffn_dropout: float = 0.1
-    emb_dropout: float = 0.1
+    attn_dropout: float = 0
+    ffn_dropout: float = 0
+    emb_dropout: float = 0
     vocab_size: int = 50258
     eps: float = 1e-6
     max_seq_len: int = 1024
@@ -28,13 +28,13 @@ class DataConfig:
     num_proc_load_dataset: int = 16 # ~half of your cpus
     total_batches: int = 1024
     pin_memory: bool = True
-    num_workers: int = 12
+    num_workers: int = 24
 
 @dataclass
 class WandbConfig:
     project: Optional[str] = "GPT-transformer"
     group: Optional[str] = "OpenWebText"
-    name: Optional[str] = "8xA100-optimized-model"
+    name: Optional[str] = "8xA100-optimized-model-v3"
     log_artifacts: bool = True
     rank_zero_only: bool = True
     log_interval: int = 100
@@ -44,8 +44,8 @@ class OptimizerConfig:
     learning_rate: float = 6.0e-4
     weight_decay: float = 1.0e-1
     betas: Tuple[float, float] = (0.9, 0.95)
-    min_lr: float = 6.0e-5
-    warmup_prop: float = 0.1
+    min_lr: float = 6e-5
+    warmup_prop: float = 0.07
 
 @dataclass
 class TrainConfig:
@@ -55,7 +55,7 @@ class TrainConfig:
     epoch: Optional[int] = None
     model: ModelConfig = field(default_factory=ModelConfig)
     precision: Optional[Literal["amp_fp16", "amp_bf16", "fp32"]] = "amp_bf16"
-    global_train_batch_size: int = 1792
+    global_train_batch_size: int = 2240
     device_train_batch_size: Optional[int] = None # Set by global_train_batch_size // get_world_rank(), do not explicitly assign
     device_train_microbatch_size: int = 56 # Set as high as possible
     device_grad_accum: Optional[int] = None # Set by device_train_batch_size // device_train_microbatch_size, do not explicity assign
@@ -67,7 +67,7 @@ class TrainConfig:
     optimizer: OptimizerConfig = field(default_factory=OptimizerConfig)
     dry_run: bool = False
     compile: bool = True
-    grad_clip: float = 4.0
+    grad_clip: float = 1.0
     time_limit: Optional[float] = 60 * 60 * 47.5 # 48 hours
     log_interval: Optional[int] = 500
     resume_from_ckpt: bool = False
