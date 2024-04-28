@@ -46,3 +46,23 @@ To initiate the training process using the configuration specified, you can use 
 torchrun --nproc_per_node=4 -m scripts.train
 ```
 Change --nproc_per_node depending on how many GPUs you have on your machine.
+
+## Example Output after 60k steps
+```
+Input starting sequence: Why is obama
+
+Completion: Why is obama going to make it?
+
+A few days ago, President Obama announced his intention to raise taxes, and the media was quick to jump in to blame him. It’s true, we are in the midst of a tax increase, and Obama is not the first. In fact, the entire economy is at risk.
+
+What’s the problem with the president’s plan? He wants to hike taxes. And he wants to cut taxes so much, it takes away the incentive for employers to hire workers.
+
+What’s the problem with Obama’s plan? It’s simple: he wants to take more tax revenue out of the economy. It’s a huge mistake. The president can do this without raising taxes, and he can do it without increasing the deficit, which is the biggest problem we face.
+
+The president has made a number of statements about this, which are true, but they are misleading.
+
+Let’s go back to the economy:
+
+We need a balanced budget to avoid the recession.
+```
+As you can see, the model is completing the text as it should from its pretraining stage. I am sampling from top 10, and the model seems to understand the basics of language and punctuation. It can use commas and capitalize, as well as chain together somewhat coherent thoughts as well. In the SFT phase it should be able to have basic conversations.
