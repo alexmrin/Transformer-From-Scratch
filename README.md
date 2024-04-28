@@ -48,6 +48,8 @@ torchrun --nproc_per_node=4 -m scripts.train
 Change --nproc_per_node depending on how many GPUs you have on your machine.
 
 ## Example Output after 60k steps
+![Training-graphs](img/wandb.png)
+This graph shows the training progress of the transformer, you can see that as the steps get longer the loss no longer decreases possibly due to the size of the model. However, the model validation loss and perplexity is not increasing meaning that the model is not overfitting as well. I assume this means that it is learning new words and phrases as it is training on new tokens every step.
 ```
 Input starting sequence: Why is obama
 
